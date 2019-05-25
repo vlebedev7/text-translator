@@ -40,33 +40,6 @@ class Reader extends Component {
     this.downloadLanguage();
   }
 
-  render() {
-    console.log("Reader render");
-    let isWord = this.state.activeText[0] === this.separationSymbol;
-    const activeTextItems = this.state.activeText.split(this.separationSymbol);
-
-    const result = activeTextItems.map((item, index) => {
-      isWord = !isWord;
-      if (isWord)
-        return (
-          <span
-            className={wordStyle}
-            key={index}
-            onClick={this.wordClick.bind(this)}
-          >
-            {item}
-          </span>
-        );
-      else return <span key={index}>{item}</span>;
-    });
-    return (
-      <div>
-        <div className={myStyle}>{result}</div>
-        <Translation />
-      </div>
-    );
-  }
-
   downloadLanguage() {
     this.props.downloadingLanguage("German");
     axios
@@ -111,11 +84,35 @@ class Reader extends Component {
       new RegExp("[^\n]*" + word + "[^\n]*/[^\n]*/[^\n]*\n.+", "gim")
     );
     console.log(match);
+    if (!match) return null;
     return match.join("\n");
-    /* if (match.length > 0)
-            return match[0];
-        else
-            return "";*/
+  }
+
+  render() {
+    console.log("Reader render");
+    let isWord = this.state.activeText[0] === this.separationSymbol;
+    const activeTextItems = this.state.activeText.split(this.separationSymbol);
+
+    const result = activeTextItems.map((item, index) => {
+      isWord = !isWord;
+      if (isWord)
+        return (
+          <span
+            className={wordStyle}
+            key={index}
+            onClick={this.wordClick.bind(this)}
+          >
+            {item}
+          </span>
+        );
+      else return <span key={index}>{item}</span>;
+    });
+    return (
+      <div>
+        <div className={myStyle}>{result}</div>
+        <Translation />
+      </div>
+    );
   }
 }
 

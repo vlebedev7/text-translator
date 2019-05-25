@@ -3,10 +3,10 @@ import { css } from "emotion";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-const myStyle = css`
+const getMyStyle = props => css`
   position: absolute;
-  left: ${this.props.translateWord.X - 20}px;
-  top: ${this.props.translateWord.Y + 40}px;
+  left: ${props.translateWord.X - 20}px;
+  top: ${props.translateWord.Y + 40}px;
   padding: 10px;
   background-color: black;
   color: white;
@@ -25,16 +25,19 @@ class Translation extends Component {
   }
 
   render() {
-    console.log("Translation render");
-    console.log(this.props.translateWord);
-    if (!this.props.translateWord) return <div />;
+    console.log("Translation render", this.props.translateWord);
+    if (!this.props.translateWord || !this.props.translateWord.Text)
+      return null;
 
-    const result = this.props.translateWord.Text.split("\n").map(
-      (item, index) => {
-        return <p className={pStyle}>{item}</p>;
-      }
+    return (
+      <div className={getMyStyle(this.props)}>
+        {this.props.translateWord.Text.split("\n").map(item => (
+          <p className={pStyle} key={item}>
+            {item}
+          </p>
+        ))}
+      </div>
     );
-    return <div className={myStyle}>{result}</div>;
   }
 }
 function mapStateToProps(state) {

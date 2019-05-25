@@ -67,7 +67,7 @@ function translateWord(state = null, action) {
       return action.payload;
     default:
       return {
-        Text: "",
+        Text: null,
         X: 0,
         Y: 0
       };

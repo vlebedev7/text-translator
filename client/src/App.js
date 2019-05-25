@@ -7,7 +7,8 @@ import LangsPanel from "./components/LangsPanel.jsx";
 
 class App extends Component {
   render() {
-    const testText = "Offiziell sollen die regierungskritischen Proteste im Iran beendet sein - doch sie gehen weiter.";
+    const testText =
+      "Offiziell sollen die regierungskritischen Proteste im Iran beendet sein - doch sie gehen weiter.";
     return (
       <div className="App">
         <header className="App-header">
