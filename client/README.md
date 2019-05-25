@@ -1,0 +1,1 @@
+Text Translator app with ReactJS and Redux

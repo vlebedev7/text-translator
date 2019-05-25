@@ -1,0 +1,30 @@
+{
+    "name": "text_translator_front",
+    "version": "0.1.0",
+    "private": true,
+    "proxy": "http://localhost:7777/",
+    "dependencies": {
+        "axios": "^0.18.0",
+        "emotion": "^10.0.7",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.3",
+        "react-dom": "^16.8.3",
+        "react-redux": "^6.0.1",
+        "redux": "^4.0.1"
+    },
+    "devDependencies": {
+        "react-scripts": "^2.1.5"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ]
+}
