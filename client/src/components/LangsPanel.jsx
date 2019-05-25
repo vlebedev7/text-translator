@@ -23,14 +23,20 @@ class LangsPanel extends Component {
     console.log("LangsPanel constructor");
   }
   langClick(e) {
-    let el = e.target;
+    const el = e.target;
   }
   render() {
     const result = this.props.languages.list
-      .sort((a, b) => { return a.name > b.name ? 1 : -1; })
+      .sort((a, b) => {
+        return a.name > b.name ? 1 : -1;
+      })
       .map((item, index) => {
         return (
-          <div className={langStyle} key={index} onClick={this.langClick.bind(this)}>
+          <div
+            className={langStyle}
+            key={index}
+            onClick={this.langClick.bind(this)}
+          >
             {item.name} {item.isLoaded ? "(loaded)" : ""}
           </div>
         );

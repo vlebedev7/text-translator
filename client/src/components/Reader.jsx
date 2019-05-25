@@ -22,7 +22,7 @@ const wordStyle = css`
 class Reader extends Component {
   constructor(props) {
     super(props);
-    console.log('Reader constructor');
+    console.log("Reader constructor");
     this.separationSymbol = "▒";
     // german, french, spanish
     const activeText = props.text
@@ -49,7 +49,11 @@ class Reader extends Component {
       isWord = !isWord;
       if (isWord)
         return (
-          <span className={wordStyle} key={index} onClick={this.wordClick.bind(this)}>
+          <span
+            className={wordStyle}
+            key={index}
+            onClick={this.wordClick.bind(this)}
+          >
             {item}
           </span>
         );
