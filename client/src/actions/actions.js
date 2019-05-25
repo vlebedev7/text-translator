@@ -10,9 +10,9 @@ export const translateWord = (text, wordX, wordY) => {
   return {
     type: "translateWord",
     payload: {
-      Text: text,
-      X: wordX,
-      Y: wordY
+      text: text,
+      x: wordX,
+      y: wordY
     }
   };
 };

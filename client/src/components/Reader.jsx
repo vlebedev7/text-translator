@@ -63,29 +63,32 @@ class Reader extends Component {
   }
 
   wordClick(e) {
-    console.log(e.target);
     const rect = e.target.getBoundingClientRect();
     // this.setState({
     //     translationWord: this.props.languages.join(', '),
     //     translationX: rect.x,
     //     translationY: rect.y
     // });
-    const str = this.getTranslation(e.target.innerText);
+    const str = this.getTranslations(e.target.innerText);
     this.props.translateWord(str, rect.x, rect.y);
   }
 
-  getTranslation(word) {
+  getTranslations(word) {
     const dict = this.props.languages.current.dictinary;
     word = word.trim().toLowerCase();
     if (word.length > 6) word = word.slice(0, word.length - 2);
     if (word.length > 8) word = word.slice(0, word.length - 3);
-    console.log("cutted word:" + word);
-    const match = dict.match(
+    console.log("cut word:" + word);
+    const matches = dict.match(
       new RegExp("[^\n]*" + word + "[^\n]*/[^\n]*/[^\n]*\n.+", "gim")
     );
-    console.log(match);
-    if (!match) return null;
-    return match.join("\n");
+    console.log(matches);
+    if (!matches) return null;
+    return matches
+      .sort((a, b) =>
+        a.split("\n")[0].length > b.split("\n")[0].length ? 1 : -1
+      )
+      .join("\n");
   }
 
   render() {

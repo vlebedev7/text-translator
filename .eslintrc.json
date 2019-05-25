@@ -11,7 +11,9 @@
   },
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "classes": true,
+      "arrowFunctions": true
     },
     "ecmaVersion": 2018,
     "sourceType": "module"

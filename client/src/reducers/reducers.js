@@ -67,9 +67,9 @@ function translateWord(state = null, action) {
       return action.payload;
     default:
       return {
-        Text: null,
-        X: 0,
-        Y: 0
+        text: null,
+        x: 0,
+        y: 0
       };
   }
 }

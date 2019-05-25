@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 
 const getMyStyle = props => css`
   position: absolute;
-  left: ${props.translateWord.X - 20}px;
-  top: ${props.translateWord.Y + 40}px;
+  left: ${props.translateWord.x - 20}px;
+  top: ${props.translateWord.y + 40}px;
   padding: 10px;
   background-color: black;
   color: white;
@@ -26,12 +26,12 @@ class Translation extends Component {
 
   render() {
     console.log("Translation render", this.props.translateWord);
-    if (!this.props.translateWord || !this.props.translateWord.Text)
+    if (!this.props.translateWord || !this.props.translateWord.text)
       return null;
 
     return (
       <div className={getMyStyle(this.props)}>
-        {this.props.translateWord.Text.split("\n").map(item => (
+        {this.props.translateWord.text.split("\n").map(item => (
           <p className={pStyle} key={item}>
             {item}
           </p>
