@@ -1,53 +1,43 @@
-import { combineReducers } from "redux";
-
-const reducers = combineReducers({
-  serverUrl,
-  languages,
-  chooseLanguage,
-  downloadingLanguage,
-  translateWord
-});
+import { combineReducers } from 'redux';
 
 // better to create a file for each purpose
 function serverUrl() {
-  return "";
+  return '';
 }
 function languages(state = null, action) {
   switch (action.type) {
-    case "saveLanguage":
-      console.log("saveLanguage", state);
-      const newState = {
-        list: state.list.filter(item => item.symbol !== action.payload.symbol),
-        current: action.payload
+    case 'saveLanguage':
+      console.log('saveLanguage', state);
+      return {
+        list: state.list
+          .filter(item => item.symbol !== action.payload.symbol)
+          .push(action.payload),
+        current: action.payload,
       };
-      newState.list.push(action.payload);
-      console.log("newState", newState);
-      return newState;
     default:
       if (state == null) {
         const defaultLangs = [
           {
-            name: "German",
-            symbol: "de",
+            name: 'German',
+            symbol: 'de',
             dictinary: null,
-            isLoaded: false
+            isLoaded: false,
           },
           {
-            name: "French",
-            symbol: "fr",
+            name: 'French',
+            symbol: 'fr',
             dictinary: null,
-            isLoaded: false
-          }
+            isLoaded: false,
+          },
         ];
         return { list: defaultLangs, current: defaultLangs[0] };
-      } else {
-        return state;
       }
+      return state;
   }
 }
 function downloadingLanguage(state = null, action) {
   switch (action.type) {
-    case "downloadLanguage":
+    case 'downloadLanguage':
       return action.payload;
     default:
       return state;
@@ -55,7 +45,7 @@ function downloadingLanguage(state = null, action) {
 }
 function chooseLanguage(state = null, action) {
   switch (action.type) {
-    case "chooseLanguage":
+    case 'chooseLanguage':
       return action.payload;
     default:
       return state;
@@ -63,15 +53,23 @@ function chooseLanguage(state = null, action) {
 }
 function translateWord(state = null, action) {
   switch (action.type) {
-    case "translateWord":
+    case 'translateWord':
       return action.payload;
     default:
       return {
         text: null,
         x: 0,
-        y: 0
+        y: 0,
       };
   }
 }
+
+const reducers = combineReducers({
+  serverUrl,
+  languages,
+  chooseLanguage,
+  downloadingLanguage,
+  translateWord,
+});
 
 export default reducers;

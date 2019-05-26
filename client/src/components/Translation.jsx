@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { css } from "emotion";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { css } from 'emotion';
+import { connect } from 'react-redux';
 
 const getMyStyle = props => css`
   position: absolute;
@@ -20,18 +19,18 @@ const pStyle = css`
 class Translation extends Component {
   constructor(props) {
     super(props);
-    console.log("Translation constructor");
+    console.log('Translation constructor');
     // console.log(this.result);
   }
 
   render() {
-    console.log("Translation render", this.props.translateWord);
-    if (!this.props.translateWord || !this.props.translateWord.text)
-      return null;
+    const { translateWord } = this.props;
+    console.log('Translation render', translateWord);
+    if (!translateWord || !translateWord.text) return null;
 
     return (
       <div className={getMyStyle(this.props)}>
-        {this.props.translateWord.text.split("\n").map(item => (
+        {translateWord.text.split('\n').map(item => (
           <p className={pStyle} key={item}>
             {item}
           </p>
@@ -42,7 +41,7 @@ class Translation extends Component {
 }
 function mapStateToProps(state) {
   return {
-    translateWord: state.translateWord
+    translateWord: state.translateWord,
   };
 }
 export default connect(mapStateToProps)(Translation);

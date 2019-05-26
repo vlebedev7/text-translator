@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { css } from "emotion";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { css } from 'emotion';
 
 const myStyle = css`
   position: fixed;
@@ -18,18 +18,18 @@ const myStyle = css`
 `;
 
 function LangDownload(props) {
-  console.log("LangDownload constructor");
+  console.log('LangDownload constructor');
   const { downloadingLanguage } = props;
   if (!downloadingLanguage) return <div />;
   return <div className={myStyle}>Downloading {downloadingLanguage}...</div>;
 }
 LangDownload.propTypes = {
-  downloadingLanguage: PropTypes.string.isRequired
+  downloadingLanguage: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    downloadingLanguage: state.downloadingLanguage
+    downloadingLanguage: state.downloadingLanguage,
   };
 }
 function matchDispatchToProps(dispatch) {

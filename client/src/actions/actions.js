@@ -1,25 +1,25 @@
 export const chooseLanguage = lang => {
-  console.log("chooseLanguage: " + lang);
+  console.log(`chooseLanguage: ${lang}`);
   return {
-    type: "chooseLanguage",
-    payload: lang
+    type: 'chooseLanguage',
+    payload: lang,
   };
 };
 export const translateWord = (text, wordX, wordY) => {
-  console.log("translateWord: " + text);
+  console.log(`translateWord: ${text}`);
   return {
-    type: "translateWord",
+    type: 'translateWord',
     payload: {
-      text: text,
+      text,
       x: wordX,
-      y: wordY
-    }
+      y: wordY,
+    },
   };
 };
 export const downloadingLanguage = langName => {
-  console.log("downloadLanguage: " + langName);
+  console.log(`downloadLanguage: ${langName}`);
   return {
-    type: "downloadLanguage",
-    payload: langName
+    type: 'downloadLanguage',
+    payload: langName,
   };
 };

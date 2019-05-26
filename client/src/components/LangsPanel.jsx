@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { css } from "emotion";
-import { bindActionsCreators, bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { css } from 'emotion';
+import { bindActionsCreators, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const myStyle = css`
   float: left;
@@ -20,11 +20,13 @@ const langStyle = css`
 class LangsPanel extends Component {
   constructor(props) {
     super(props);
-    console.log("LangsPanel constructor");
+    console.log('LangsPanel constructor');
   }
+
   langClick(e) {
     const el = e.target;
   }
+
   render() {
     const result = this.props.languages.list
       .sort((a, b) => {
@@ -37,7 +39,7 @@ class LangsPanel extends Component {
             key={index}
             onClick={this.langClick.bind(this)}
           >
-            {item.name} {item.isLoaded ? "(loaded)" : ""}
+            {item.name} {item.isLoaded ? '(loaded)' : ''}
           </div>
         );
       });
@@ -47,7 +49,7 @@ class LangsPanel extends Component {
 
 function mapStateToProps(state) {
   return {
-    languages: state.languages
+    languages: state.languages,
   };
 }
 function matchDispatchToProps(dispatch) {
