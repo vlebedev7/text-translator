@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Translation from './Translation';
-import { downloadingLanguage, translateWord } from '../actions/actions';
+import { downloadingLanguage, selectedWord } from '../actions/actions';
+import { Language, SelectedWord } from '../data/models';
 
 const myStyle = css`
   padding: 10px;
@@ -25,14 +26,14 @@ class Reader extends Component {
     console.log('Reader constructor');
     this.separationSymbol = '▒';
     // german, french, spanish
-    const activeText = props.text
+    const currentText = props.text
       .replace(this.separationSymbol, '')
       .replace(
         /[\wäöüÄÖÜßàâæéèëêïîôœùûüÿáéíóúüñ]+/g,
         `${this.separationSymbol}$&${this.separationSymbol}`
       );
     this.state = {
-      activeText,
+      currentText,
       translationWord: '1212',
       translationX: -1000,
       translationY: -1000,
@@ -40,44 +41,13 @@ class Reader extends Component {
     this.downloadLanguage();
   }
 
-  downloadLanguage() {
-    this.props.downloadingLanguage('German');
-    axios
-      .post('/getlang', { lang: 'de' })
-      .then(response => {
-        console.log('loadLang() response:');
-        console.log(response);
-        this.props.downloadingLanguage(null);
-        this.props.saveLanguage({
-          name: 'German',
-          symbol: 'de',
-          dictinary: response.data,
-          isLoaded: true,
-        });
-      })
-      .catch(error => {
-        console.log('loadLang() error:');
-        console.log(error);
-        this.props.downloadingLanguage(null);
-      });
-  }
-
-  wordClick(e) {
-    const rect = e.target.getBoundingClientRect();
-    // this.setState({
-    //     translationWord: this.props.languages.join(', '),
-    //     translationX: rect.x,
-    //     translationY: rect.y
-    // });
-    const str = this.getTranslations(e.target.innerText);
-    this.props.translateWord(str, rect.x, rect.y);
-  }
-
   getTranslations(word) {
     const dict = this.props.languages.current.dictinary;
     let parsedWord = word.trim().toLowerCase();
-    if (parsedWord.length > 6) parsedWord = parsedWord.slice(0, parsedWord.length - 2);
-    if (parsedWord.length > 8) parsedWord = parsedWord.slice(0, parsedWord.length - 3);
+    if (parsedWord.length > 6)
+      parsedWord = parsedWord.slice(0, parsedWord.length - 2);
+    if (parsedWord.length > 8)
+      parsedWord = parsedWord.slice(0, parsedWord.length - 3);
     if (parsedWord.length > 10) parsedWord = parsedWord.slice(0, 8);
     console.log(`parsed word:${parsedWord}`);
     const matches = dict.match(
@@ -95,13 +65,39 @@ class Reader extends Component {
       .join('\n');
   }
 
+  downloadLanguage() {
+    this.props.downloadingLanguage('German');
+    axios
+      .post('/getlang', { lang: 'de' })
+      .then(response => {
+        console.log('loadLang() response:');
+        console.log(response);
+        this.props.saveLanguage(new Language('de', 'German', response.data));
+      })
+      .catch(error => {
+        console.log('loadLang() error:', error);
+      });
+    this.props.downloadingLanguage(null);
+  }
+
+  wordClick(e) {
+    const rect = e.target.getBoundingClientRect();
+    // this.setState({
+    //     translationWord: this.props.languages.join(', '),
+    //     translationX: rect.x,
+    //     translationY: rect.y
+    // });
+    const str = this.getTranslations(e.target.innerText);
+    this.props.selectedWord(str, rect.x, rect.y);
+  }
+
   render() {
     console.log('Reader render');
-    const { activeText } = this.props;
-    let isWord = activeText[0] === this.separationSymbol;
-    const activeTextItems = activeText.split(this.separationSymbol);
+    const { currentText } = this.state;
+    let isWord = currentText[0] === this.separationSymbol;
+    const textWords = currentText.split(this.separationSymbol);
 
-    const result = activeTextItems.map((item, index) => {
+    const result = textWords.map((item, index) => {
       isWord = !isWord;
       if (isWord)
         return (
@@ -135,7 +131,7 @@ function matchDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       downloadingLanguage,
-      translateWord,
+      selectedWord,
       saveLanguage(lang) {
         return {
           type: 'saveLanguage',

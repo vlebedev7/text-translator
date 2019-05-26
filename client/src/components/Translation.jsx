@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { css } from 'emotion';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { css } from 'emotion';
+import cssValues from '../data/cssValues';
+import { SelectedWord } from '../data/models';
 
 const getMyStyle = props => css`
   position: absolute;
-  left: ${props.translateWord.x - 20}px;
-  top: ${props.translateWord.y + 40}px;
+  left: ${props.selectedWord.x - 20}px;
+  top: ${props.selectedWord.y + 40}px;
   padding: 10px;
-  background-color: black;
+  background-color: ${cssValues.colors.black};
   color: white;
   font-size: 20px;
 `;
@@ -16,32 +19,27 @@ const pStyle = css`
   margin: 0;
 `;
 
-class Translation extends Component {
-  constructor(props) {
-    super(props);
-    console.log('Translation constructor');
-    // console.log(this.result);
-  }
+const Translation = props => {
+  const { selectedWord } = props;
+  console.log('Translation render', selectedWord);
+  if (!selectedWord || !selectedWord.text) return null;
 
-  render() {
-    const { translateWord } = this.props;
-    console.log('Translation render', translateWord);
-    if (!translateWord || !translateWord.text) return null;
-
-    return (
-      <div className={getMyStyle(this.props)}>
-        {translateWord.text.split('\n').map(item => (
-          <p className={pStyle} key={item}>
-            {item}
-          </p>
-        ))}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={getMyStyle(props)}>
+      {selectedWord.text.split('\n').map(item => (
+        <p className={pStyle} key={item}>
+          {item}
+        </p>
+      ))}
+    </div>
+  );
+};
+Translation.propTypes = {
+  selectedWord: PropTypes.instanceOf(SelectedWord).isRequired,
+};
 function mapStateToProps(state) {
   return {
-    translateWord: state.translateWord,
+    selectedWord: state.selectedWord,
   };
 }
 export default connect(mapStateToProps)(Translation);

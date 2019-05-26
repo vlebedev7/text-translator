@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { Language, SelectedWord } from '../data/models';
 
 // better to create a file for each purpose
 function serverUrl() {
@@ -9,26 +10,17 @@ function languages(state = null, action) {
     case 'saveLanguage':
       console.log('saveLanguage', state);
       return {
-        list: state.list
-          .filter(item => item.symbol !== action.payload.symbol)
-          .push(action.payload),
+        list: [
+          action.payload,
+          ...state.list.filter(item => item.symbol !== action.payload.symbol),
+        ],
         current: action.payload,
       };
     default:
       if (state == null) {
         const defaultLangs = [
-          {
-            name: 'German',
-            symbol: 'de',
-            dictinary: null,
-            isLoaded: false,
-          },
-          {
-            name: 'French',
-            symbol: 'fr',
-            dictinary: null,
-            isLoaded: false,
-          },
+          new Language('de', 'German'),
+          new Language('fr', 'French'),
         ];
         return { list: defaultLangs, current: defaultLangs[0] };
       }
@@ -51,16 +43,12 @@ function chooseLanguage(state = null, action) {
       return state;
   }
 }
-function translateWord(state = null, action) {
+function selectedWord(state = null, action) {
   switch (action.type) {
-    case 'translateWord':
+    case 'selectedWord':
       return action.payload;
     default:
-      return {
-        text: null,
-        x: 0,
-        y: 0,
-      };
+      return null;
   }
 }
 
@@ -69,7 +57,7 @@ const reducers = combineReducers({
   languages,
   chooseLanguage,
   downloadingLanguage,
-  translateWord,
+  selectedWord,
 });
 
 export default reducers;

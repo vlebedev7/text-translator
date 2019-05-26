@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { css } from 'emotion';
 
@@ -32,11 +31,5 @@ function mapStateToProps(state) {
     downloadingLanguage: state.downloadingLanguage,
   };
 }
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
-}
 
-export default connect(
-  mapStateToProps,
-  matchDispatchToProps
-)(LangDownload);
+export default connect(mapStateToProps)(LangDownload);

@@ -39,7 +39,7 @@ class LangsPanel extends Component {
             key={index}
             onClick={this.langClick.bind(this)}
           >
-            {item.name} {item.isLoaded ? '(loaded)' : ''}
+            {item.name} {item.isLoaded() ? '(loaded)' : ''}
           </div>
         );
       });
