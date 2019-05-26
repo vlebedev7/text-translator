@@ -78,16 +78,20 @@ class Reader extends Component {
     word = word.trim().toLowerCase();
     if (word.length > 6) word = word.slice(0, word.length - 2);
     if (word.length > 8) word = word.slice(0, word.length - 3);
+    if (word.length > 10) word = word.slice(0, 8);
     console.log("cut word:" + word);
     const matches = dict.match(
       new RegExp("[^\n]*" + word + "[^\n]*/[^\n]*/[^\n]*\n.+", "gim")
     );
     console.log(matches);
     if (!matches) return null;
+    const numOfTranslations = 5;
     return matches
-      .sort((a, b) =>
-        a.split("\n")[0].length > b.split("\n")[0].length ? 1 : -1
+      .sort((trans1, trans2) =>
+        trans1.split("\n")[0].length > trans2.split("\n")[0].length ? 1 : -1
       )
+      .slice(0, numOfTranslations)
+      .map(trans => trans.split("\n").join(" — "))
       .join("\n");
   }
 
