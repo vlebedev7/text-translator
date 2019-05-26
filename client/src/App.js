@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Reader from "./components/Reader.jsx";
 import LangDownload from "./components/LangDownload.jsx";
@@ -12,8 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Learn a language by reading!</h1>
         </header>
         <LangsPanel />
         <Reader text={testText} />
